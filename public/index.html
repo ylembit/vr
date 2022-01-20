@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Walled Gallery Template</title>
+    <meta name="description" content="Hello, WebVR! - A-Frame" />
+    <script src="https://aframe.io/releases/1.0.0/aframe.min.js"></script>
+    <script>
+      AFRAME.registerComponent("sound-mod", {
+        schema: {
+          playing: {
+            type: "boolean",
+            default: false
+          }
+        },
+        update: function() {
+          let data = this.data;
+          let el = this.el;
+          let playing = data.playing;
+          var sceneEl = document.querySelector('a-scene');
+          
+          // get all entities
+          let all_els = sceneEl.querySelectorAll('[sound]');
+
+          el.addEventListener("click", () => {
+            for (var i = 0; i < all_els.length; i++){
+                all_els[i].components.sound.pauseSound();
+            }
+            el.components.sound.playSound();
+          });
+        }
+      });
+    </script>
+ 
+  </head>
+  <body>
+    <a-scene>
+      <a-assets>
+        <a-asset-item id="stand1" src="newtable.gltf"></a-asset-item>
+     
+      </a-assets>
+
+      <a-entity camera look-controls wasd-controls position="0 2.5 0">
+      </a-entity>
+      <a-entity id="sierra-nevada" position="0 2 -1.5">
+          <a-box depth="0.05" height=".72" width="1.2" src="https://cdn.glitch.global/8bf89d39-4eaf-4728-8d7e-36a56902d332/forest_fog_bw_157928_2560x1440.jpg?v=1642655188808"> </a-box>
+</a-entity>
+
+      <a-camera position="0 1.5 0">
+        <a-cursor color="#FF0000"></a-cursor>
+      </a-camera>
+
+      <!-- WALLS -->
+      <a-box color="#555" depth="40" height="40" width="0.5" position="12 0 4"></a-box>
+      <a-box color="#666" depth="40" height="40" width="0.5" position="-15 0 4"></a-box>
+      <a-box color="#777" depth="0.5" height="40" width="40" position="4 0 10"></a-box>
+      <a-box color="#888" depth="0.5" height="40" width="40" position="4 0 -10"></a-box>
+      
+      <a-entity
+        id="stand"
+        position="3 -.1 .2"
+      >
+        <a-gltf-model src="#stand1"
+          rotation="0 180 0"
+          scale=".032 .02515 .032"
+        ></a-gltf-model>
+      </a-entity>
+
+      <a-plane
+        src="https://cdn.glitch.com/c68ca67d-e783-45d1-90d0-35b99ccf9361%2FSeamless%20cream%20marble%20cloud%20texture.jpg?v=1547146644573"
+        rotation="-90 0 0"
+        height="100"
+        width="100"
+        metalness="0.1"
+        repeat= "30 50"
+      ></a-plane>
+
+      <a-sky
+        color="#EEEEEE"
+        shader="standard"
+        material="emissive: #fff; emissiveIntensity: .15"
+      ></a-sky>
+    </a-scene>
+  </body>
+</html>
